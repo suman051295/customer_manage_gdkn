@@ -8,12 +8,13 @@ Please make sure first you have install the following applications in your syste
 If all the above services are running then create a Database => `customer_manage_gdkn`
 
 Then run this two sql statement to create necessery tables => 
-db\customer_manage_gdkn_address.sql
-db\customer_manage_gdkn_customer.sql
+1. db\customer_manage_gdkn_address.sql
+2. db\customer_manage_gdkn_customer.sql
 
 # Step 3
 Modify the Mysql Server details in this page =>
 apibackend\db.config.js
+
     {
         DB_HOST => Your Mysql Server Host
         DB_USER => Your Mysql Server username
@@ -23,9 +24,9 @@ apibackend\db.config.js
 
 # step 4
 Run all applications =>
-apibackend / => npm run start
+1. apibackend / => npm run start
     ** This service will run on port 3000 => http://localhost:3000
-webapp / => ng serve 
+2. webapp / => ng serve 
     ** This service will run on port 4200 => http://localhost:4200
     ## If you wish to run with another port then please whitelist your host
         => apibackend\app.js =>> Line No. 15 (res.header(`Access-Control-Allow-Origin`, `http://localhost:4200`))
