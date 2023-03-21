@@ -1,0 +1,252 @@
+<div class="main-head row">
+    <div class="col-sm-2 text-center">
+        <img class="rounded-circle" alt="avatar2" [src]="getImage()" />
+    </div>
+    <div class="col-sm-9 main-head-content">
+        <p class="name">{{customerDetails.firstName}} {{customerDetails.lastName}}</p>
+        <div>
+            <span class="main-head-content-span"><span class="glyphicon glyphicon-user"></span>
+                {{customerDetails.userName}}</span>
+            <span class="main-head-content-span"><span class="glyphicon glyphicon-envelope"></span>
+                {{customerDetails.email}}</span>
+            <span class="main-head-content-span"><span class="glyphicon glyphicon-earphone"></span>
+                {{customerDetails.phone}}</span>
+        </div>
+        <div class="profile-buttons">
+            <button type="button" class="btn btn-default edit-btn" (click)="editCustomer()" data-toggle="modal" data-target="#editCustomerModal">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit</button>
+            <button type="button" class="btn btn-default dlt-btn" (click)="deleteCustomer()"><span
+                    class="glyphicon glyphicon-trash"></span> Delete
+                Customer</button>
+        </div>
+    </div>
+
+</div>
+<div class="main-head-border"></div>
+<div class="main-head">
+
+    <div class="name">
+        Profile Details
+    </div>
+    <div class="row profile-details-content-row">
+        <div class="col-sm-3 profile-details-content">
+            <p>First Name</p>
+            <span>{{customerDetails.firstName}}</span>
+        </div>
+        <div class="col-sm-3 profile-details-content">
+            <p>Last Name</p>
+            <span>{{customerDetails.lastName}}</span>
+        </div>
+        <div class="col-sm-2 profile-details-content">
+            <p>Gender</p>
+            <span>{{customerDetails.gender}}</span>
+        </div>
+        <div class="col-sm-2 profile-details-content">
+            <p>Date of Birth</p>
+            <span>{{customerDetails.dob | date}}</span>
+        </div>
+    </div>
+
+    <div class="name">
+        Address
+    </div>
+    <div class="profile-details-address-row">
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Address Line 1:</p>
+            </div>
+            <div class="col-sm-8 right">
+                <p>{{customerDetails.address}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Landmark:</p>
+            </div>
+            <div class="col-sm-8 right">
+                <p>{{customerDetails.landmark}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>City:</p>
+            </div>
+            <div class="col-sm-6 right">
+                <p>{{customerDetails.city}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>State:</p>
+            </div>
+            <div class="col-sm-6 right">
+                <p>{{customerDetails.state}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>Country:</p>
+            </div>
+            <div class="col-sm-6 right">
+                <p>{{customerDetails.country}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>Zipcode:</p>
+            </div>
+            <div class="col-sm-6 right">
+                <p>{{customerDetails.zipcode}}</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editCustomerModal" role="dialog">
+    <button type="button" class="btn btn-default display-none" #closebutton data-dismiss="modal"></button>
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content" *ngIf="firstState">
+            <div class="modal-header">
+                <div class="row m-5">
+                    <div class="col-sm-5 modal-range modal-range-active"></div>
+                    <div class="col-sm-5 modal-range"></div>
+                </div>
+                <h4 class="modal-title">Update User | Login Details</h4>
+            </div>
+            <form [formGroup]="loginDetailsForm" (ngSubmit)="proceedFirstStep()" class="form-inline">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="user_name" class="sr-only">User Name*</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name"
+                            formControlName="userName" placeholder="User Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name" class="sr-only">First Name*</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                            formControlName="firstName" placeholder="First Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="sr-only">Last Name*</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName"
+                            placeholder="Last Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email*</label>
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                            placeholder="Email*">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile" class="sr-only">Mobile*</label>
+                        <input type="number" class="form-control" id="mobile" name="mobile" formControlName="phone"
+                            placeholder="Mobile*">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob" class="sr-only">DOB*</label>
+                        <input type="date" class="form-control" id="dob" name="dob" formControlName="dob"
+                            placeholder="DOB*">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password*</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            formControlName="password" placeholder="Password*">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="sr-only">Confirm Password*</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            formControlName="confirmPassword" placeholder="Confirm Password*">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" #closebutton (click)="closeFirstStep()"
+                        data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"> Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-default proceed-btn">
+                        <span class="glyphicon glyphicon-ok"> Proceed</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- For Address -->
+        <div class="modal-content" *ngIf="!firstState">
+            <div class="modal-header">
+                <div class="row m-5">
+                    <div class="col-sm-5 modal-range"></div>
+                    <div class="col-sm-5 modal-range modal-range-active"></div>
+                </div>
+                <h4 class="modal-title">Update User | Profile Details</h4>
+            </div>
+            <form class="form-inline" [formGroup]="profileDetailsForm" (ngSubmit)="profileDetailsUpdateSubmit()">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="profilePic" class="">Profile Pic</label>
+                        <input type="file" class="form-control" (change)="fileChange($event)" id="profilePic" name="profilePic"
+                            placeholder="Profile Pic*">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="sr-only">Gender*</label>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender" value="male">Male</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender"
+                                    value="female">Female</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender"
+                                    value="others">Others</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="sr-only">Address Line 1*</label>
+                        <input type="text" class="form-control" id="addres" name="address" formControlName="address"
+                            placeholder="Address Line 1*">
+                    </div>
+                    <div class="form-group">
+                        <label for="landmark" class="sr-only">Landmark*</label>
+                        <input type="text" class="form-control" id="landmark" name="landmark" formControlName="landmark"
+                            placeholder="Landmark*">
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="sr-only">City*</label>
+                        <input type="text" class="form-control" id="city" name="city" formControlName="city"
+                            placeholder="City*">
+                    </div>
+                    <div class="form-group">
+                        <label for="state" class="sr-only">State*</label>
+                        <input type="text" class="form-control" id="state" name="state" formControlName="state"
+                            placeholder="State*">
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="sr-only">Country*</label>
+                        <input type="text" class="form-control" id="country" name="country" formControlName="country"
+                            placeholder="Country*">
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode" class="sr-only">Zipcode*</label>
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode"
+                            placeholder="Zipcode*">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="firstState=true" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"> Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-default proceed-btn">
+                        <span class="glyphicon glyphicon-bookmark"> Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

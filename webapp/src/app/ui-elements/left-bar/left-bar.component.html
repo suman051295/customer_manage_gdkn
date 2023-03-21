@@ -1,0 +1,194 @@
+<div class="row">
+    <div class="col-sm-9 search-box">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search By Name Or Email" name="srch-term"
+                id="srch-term" [(ngModel)]="customerListOptions.free_search_text">
+            <div class="input-group-btn">
+                <button class="btn btn-default" (click)="getCustomers()" type="button"><i
+                        class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2 plus-icon">
+        <button type="button" class="add-btn" data-toggle="modal" data-target="#myModal"><i
+                class="glyphicon glyphicon-plus-sign"></i></button>
+    </div>
+</div>
+<div class="main-head-border"></div>
+<div class="row sort-by">
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <span class="glyphicon glyphicon-sort"></span>
+                Sort By Name
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Ascending</a></li>
+                    <li><a href="#">Descending</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="left-list">
+    <div class="row left-row" [ngClass]="(customer.customerId==activeCustomerId)?'active':''"
+        *ngFor="let customer of customers" (click)="selectCustomer(customer)">
+        <div class="col-sm-2 left-bar-img">
+            <img class="rounded-circle" alt="avatar2" [src]="getImage(customer)" />
+        </div>
+        <div class="col-sm-9">
+            <p class="left-bar-name">{{customer?.firstName}} {{customer?.lastName}}</p>
+            <p>{{customer?.email}}</p>
+        </div>
+    </div>
+</div>
+<div class="main-head-border"></div>
+<app-pagination [startIndex]="customerListOptions.startIndex" [pageSize]="customerListOptions.pageSize"
+    [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)"></app-pagination>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <button type="button" class="btn btn-default display-none" #closebutton data-dismiss="modal"></button>
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content" *ngIf="firstState">
+            <div class="modal-header">
+                <div class="row m-5">
+                    <div class="col-sm-5 modal-range modal-range-active"></div>
+                    <div class="col-sm-5 modal-range"></div>
+                </div>
+                <h4 class="modal-title">Add User | Login Details</h4>
+            </div>
+            <form [formGroup]="loginDetailsForm" (ngSubmit)="proceedFirstStep()" class="form-inline">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="user_name" class="sr-only">User Name*</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name"
+                            formControlName="userName" placeholder="User Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name" class="sr-only">First Name*</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                            formControlName="firstName" placeholder="First Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="sr-only">Last Name*</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName"
+                            placeholder="Last Name*">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email*</label>
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                            placeholder="Email*">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile" class="sr-only">Mobile*</label>
+                        <input type="number" class="form-control" id="mobile" name="mobile" formControlName="phone"
+                            placeholder="Mobile*">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob" class="sr-only">DOB*</label>
+                        <input type="date" class="form-control" id="dob" name="dob" formControlName="dob"
+                            placeholder="DOB*">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password*</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            formControlName="password" placeholder="Password*">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="sr-only">Confirm Password*</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            formControlName="confirmPassword" placeholder="Confirm Password*">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" #closebutton (click)="closeFirstStep()"
+                        data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"> Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-default proceed-btn">
+                        <span class="glyphicon glyphicon-ok"> Proceed</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- For Address -->
+        <div class="modal-content" *ngIf="!firstState">
+            <div class="modal-header">
+                <div class="row m-5">
+                    <div class="col-sm-5 modal-range"></div>
+                    <div class="col-sm-5 modal-range modal-range-active"></div>
+                </div>
+                <h4 class="modal-title">Add User | Profile Details</h4>
+            </div>
+            <form class="form-inline" [formGroup]="profileDetailsForm" (ngSubmit)="profileDetailsSubmit()">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="profilePic" class="">Profile Pic</label>
+                        <input type="file" (change)="fileChange($event)" class="form-control" id="profilePic" name="profilePic"
+                            placeholder="Profile Pic*">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="sr-only">Gender*</label>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender" value="male">Male</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender"
+                                    value="female">Female</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="gender" formControlName="gender"
+                                    value="others">Others</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="sr-only">Address Line 1*</label>
+                        <input type="text" class="form-control" id="addres" name="address" formControlName="address"
+                            placeholder="Address Line 1*">
+                    </div>
+                    <div class="form-group">
+                        <label for="landmark" class="sr-only">Landmark*</label>
+                        <input type="text" class="form-control" id="landmark" name="landmark" formControlName="landmark"
+                            placeholder="Landmark*">
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="sr-only">City*</label>
+                        <input type="text" class="form-control" id="city" name="city" formControlName="city"
+                            placeholder="City*">
+                    </div>
+                    <div class="form-group">
+                        <label for="state" class="sr-only">State*</label>
+                        <input type="text" class="form-control" id="state" name="state" formControlName="state"
+                            placeholder="State*">
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="sr-only">Country*</label>
+                        <input type="text" class="form-control" id="country" name="country" formControlName="country"
+                            placeholder="Country*">
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode" class="sr-only">Zipcode*</label>
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode"
+                            placeholder="Zipcode*">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" (click)="firstState=true" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"> Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-default proceed-btn">
+                        <span class="glyphicon glyphicon-bookmark"> Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

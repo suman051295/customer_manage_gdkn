@@ -1,0 +1,32 @@
+.modal-range {
+    height: 5px;
+    border-radius: 10px;
+    border: 1px solid;
+    margin: 6px;
+}
+
+.modal-range-active {
+    background-color: #830f0f;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px !important;
+}
+
+.form-group input {
+    width: 100%;
+}
+
+.modal-footer {
+    text-align: center !important;
+}
+
+.proceed-btn {
+    background-color: #830f0f;
+    color: #fff;
+}
+
+.display-none {
+    display: none;
+}

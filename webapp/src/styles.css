@@ -1,0 +1,113 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+body {
+    background-color: #f1e2e2 !important;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+    border-radius: 0;
+    background-color: #780202 !important;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+    height: auto
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    padding-top: 20px;
+    background-color: white;
+    height: 610px;
+    max-height: 610px;
+    /* overflow-y: scroll; */
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+}
+
+.main-body {
+    background-color: white;
+    margin: 25px;
+    height: 100%;
+}
+
+.main-head {
+    margin: 20px;
+}
+
+.main-head-border {
+    border-bottom: 1px solid #780202;
+}
+
+.main-head-img {
+    text-align: center;
+}
+
+.name {
+    font-size: 27px;
+}
+
+.main-head-content-span {
+    margin-right: 15px;
+}
+
+.profile-buttons {
+    margin: 25px;
+}
+.profile-buttons .edit-btn {
+    margin-right: 20px;
+    color: #780202;
+}
+.profile-buttons .dlt-btn {
+    font-weight: 600;
+    color: #ee3d3d;
+}
+
+.main-head .rounded-circle {
+    border-radius: 50%;
+    width: 100px;
+}
+
+.profile-details-content {
+    margin: 10px;
+    background-color: #f1e2e2;
+    height: 60px;
+}
+.profile-details-content p {
+    margin-top: 5px;
+    font-size: 10px;
+}
+
+.profile-details-address-row {
+    width: 50%;
+}
+.profile-details-address-row .row:nth-child(even) {
+    background-color: #f1ecec;
+}
+.profile-details-address-row .row p {
+    margin-top: 2px;
+}
+
+.profile-details-address-row .right {
+    text-align: right;
+}
+
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+
+    .row.content {
+        height: auto;
+    }
+}
+
+/* You can add global styles to this file, and also import other style files */

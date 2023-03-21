@@ -1,0 +1,22 @@
+<div class="pagination" *ngIf="pages.length > 0">
+    <!-- <a class="first" short-code="Alt+F"
+        (click)="currentPage!=1?pageChange(1):$event.stopPropagation()"
+        [ngClass]="{'text-muted':(currentPage==1)}">First</a> -->
+    <a class="prev" short-code="Alt+P"
+        (click)="currentPage>1?pageChange(currentPage-1):$event.stopPropagation()"
+        [ngClass]="{'text-muted':currentPage==1}">«</a>
+    <a class="p-2 pages active" short-code="Alt+G" [ngClass]="{'d-none':enableGotoPageMode}" (click)="capturePageNumber()">
+        Page(s) {{currentPage}} / {{numberOfPages}}
+    </a>
+    <input #pageNumber type="number" class="p-2 inputBoxStyle" [ngClass]="{'d-none':!enableGotoPageMode}"
+        (blur)="pageChange(currentPage)" (keypress)="numberBoxKeyPress($event)" [(ngModel)]="currentPage"
+        (ngModelChange)="pageNumerEnter($event)" />
+    <a class="next" short-code="Alt+N"
+        (click)="currentPage<numberOfPages?pageChange(currentPage+1):$event.stopPropagation()"
+        [ngClass]="{'text-muted':currentPage==numberOfPages}">
+        »
+    </a>
+    <!-- <a class="last" short-code="Alt+L"
+        (click)="currentPage!=numberOfPages?pageChange(numberOfPages):$event.stopPropagation()"
+        [ngClass]="{'text-muted':(currentPage==numberOfPages)}">Last</a> -->
+</div>

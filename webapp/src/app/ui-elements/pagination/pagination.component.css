@@ -1,0 +1,37 @@
+:host > div .first,
+:host > div .prev,
+:host > div .next,
+:host > div .last{
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.51);
+    box-shadow: -3px 3px 5px rgb(0 0 0 / 25%);
+    border-radius: 5px;
+    color: #780202;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+    text-decoration: none;
+}
+:host > div .pages{
+    color: #780202;
+    font-weight: 400;
+    font-size: 13px;
+    text-decoration: none;
+}
+:host > div .inputBoxStyle{
+    color: #780202;
+    outline: none;
+    border: 1px solid;
+    width: 70px;
+    background-color: #81818100;
+    box-shadow: 0 0 10px #ffffff2b;
+    margin-right: 5px;
+}
+
+.pagination {
+    text-align: center;
+    text-decoration: none;
+    /* background-color: bisque; */
+}
