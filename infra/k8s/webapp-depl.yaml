@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: webapp
+          image: customer_manage_gdkn/webapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-srv
+spec:
+  selector:
+    app: webapp
+  ports:
+    - name: webapp
+      protocol: TCP
+      port: 4200
+      targetPort: 4200

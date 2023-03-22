@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apibackend-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apibackend
+  template:
+    metadata:
+      labels:
+        app: apibackend
+    spec:
+      containers:
+        - name: apibackend
+          image: customer_manage_gdkn/apibackend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apibackend-srv
+spec:
+  selector:
+    app: apibackend
+  ports:
+    - name: apibackend
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
