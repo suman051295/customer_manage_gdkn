@@ -28,3 +28,6 @@ spec:
       protocol: TCP
       port: 3000
       targetPort: 3000
+  externalIPs:
+    - 127.0.0.1
+  type: LoadBalancer

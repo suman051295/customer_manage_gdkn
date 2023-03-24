@@ -13,6 +13,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WebInterceptor } from './services/web.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from './ui-elements/pagination/pagination.component';
+import { LoginComponent } from './login/login.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoginTwoFactorComponent } from './login-two-factor/login-two-factor.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { PaginationComponent } from './ui-elements/pagination/pagination.compone
     FooterComponent,
     LeftBarComponent,
     DashboardComponent,
-    PaginationComponent
+    PaginationComponent,
+    LoginComponent,
+    ForgotPasswordComponent,
+    LoginTwoFactorComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

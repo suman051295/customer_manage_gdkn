@@ -1,0 +1,20 @@
+<div class="back">
+    <div class="div-center">
+        <div class="content">
+            <h3>Enter 2FA Code</h3>
+            <hr />
+            <form (ngSubmit)="loginWithCode()">
+                <div class="form-group">
+                    <label for="logincode">Enter 2FA Code*</label>
+                    <input type="text" class="form-control" id="logincode" placeholder="Login code" name="logincode" [(ngModel)]="logincode" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Proceed</button>
+                <hr />
+                <!-- <button type="button" class="btn btn-link">Signup</button> -->
+                <button type="button" class="btn btn-link">Back To Login</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>

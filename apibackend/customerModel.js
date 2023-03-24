@@ -1,6 +1,7 @@
 const dbConnection = require("./db");
 const dbTable = require("./db.table");
 const passwordHash = require('password-hash');
+const Mail = require("./sendMailModel");
 /** Class for executing all DB related query */
 class CustomerExe {
     /**
@@ -14,11 +15,12 @@ class CustomerExe {
             let query = `SELECT *
                             FROM ${dbTable.customer} AS customer
                             LEFT JOIN ${dbTable.address} AS address
-                            ON customer.customerId = address.customerId `;
+                            ON customer.customerId = address.customerId
+                            WHERE customer.role = 'user' `;
             let queryWithLimit = query;
 
             if (req.body.free_search_text && req.body.free_search_text != '') {
-                queryWithLimit += ` WHERE customer.firstName LIKE '%${req.body.free_search_text}%'
+                queryWithLimit += ` AND customer.firstName LIKE '%${req.body.free_search_text}%'
                                         OR customer.lastName LIKE '%${req.body.free_search_text}%'
                                         OR customer.email LIKE '%${req.body.free_search_text}%'`;
             }
@@ -74,7 +76,7 @@ class CustomerExe {
                 dob: req.body.dob,
                 gender: req.body.gender,
                 password: passwordHash.generate(req.body.password),
-                image: photoNewName,
+                image: '',
                 createdDate: new Date(),
             }
 
@@ -86,7 +88,12 @@ class CustomerExe {
                 } else {
                     console.log(rows)
                     /** Add address of this customer */
-                    await this.addNewCustomerAddress(req, rows['insertId']).then(() => {
+                    await this.addLoginData(req, rows['insertId']);
+                    await this.addNewCustomerAddress(req, rows['insertId']).then(async () => {
+                        let body = `You are successfully registered with us.\n
+                                    Your Username:${req.body.userName}\n
+                                    Password: ${req.body.password}`;
+                        await Mail.sendMail(req.body.email,"Customer Registered",body);
                         resolve(rows);
                     }).catch((err) => {
                         reject(err);
@@ -124,6 +131,47 @@ class CustomerExe {
             });
         })
     }
+
+    static addLoginData(req, customerIdValue) {
+        return new Promise((resolve, reject) => {
+            let insertLoginData = {
+                customerId: customerIdValue,
+                userName: req.body.userName,
+                password: passwordHash.generate(req.body.password),
+                role: "user",
+                createdDate: new Date()
+            }
+            let query = `INSERT INTO ${dbTable.loginData} SET ?`;
+            dbConnection.query(query, insertLoginData, (err, rows) => {
+                if (err) {
+                    console.log(err)
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        })
+    }
+
+    static updateLoginData(req, customerIdValue) {
+        return new Promise((resolve, reject) => {
+            let insertLoginData = {
+                userName: req.body.userName,
+                password: passwordHash.generate(req.body.password),
+                updatedDate: new Date()
+            }
+            let query = `UPDATE ${dbTable.loginData} SET ? WHERE customerId=?`;
+            dbConnection.query(query, [insertLoginData, customerIdValue], (err, rows) => {
+                if (err) {
+                    console.log(err)
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        })
+    }
+
     /**
      * Update a customer
      * @param {*} req 
@@ -149,6 +197,7 @@ class CustomerExe {
                     console.log(err)
                     reject(err);
                 } else {
+                    await this.updateLoginData(req, req.body.customerId);
                     await this.updateCustomerAddress(req, req.body.customerId);
                     resolve(rows);
                 }

@@ -5,7 +5,7 @@ var logger = require('morgan');
 
 /** Routers */
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
 
 /** DB Connection */
 var dbConnection = require("./db");
@@ -14,7 +14,7 @@ var dbConnection = require("./db");
 const allowCrossDomain = (req, res, next) => {
     res.header(`Access-Control-Allow-Origin`, `http://localhost:4200`);
     res.header(`Access-Control-Allow-Methods`, `GET,POST`);
-    res.header(`Access-Control-Allow-Headers`, `Content-Type`);
+    res.header(`Access-Control-Allow-Headers`, `Content-Type,token`);
     next();
 };
 
@@ -28,6 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // CROS Access
 app.use(allowCrossDomain);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 module.exports = app;

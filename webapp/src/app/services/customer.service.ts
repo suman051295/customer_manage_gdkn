@@ -24,6 +24,14 @@ export class CustomerService {
     return this._http.post<ApiResponse<ICustomer[]>>(environment.API_BASE_URL + 'selectCustomers', customerListOptions);
   }
   /**
+   * Get all customers
+   * @param customerListOptions : IcustomerListOptions
+   * @returns ApiResponse<ICustomer[]>
+   */
+  getCustomersById(loggedIdCustomerId: string): Observable<ApiResponse<ICustomer[]>> {
+    return this._http.post<ApiResponse<ICustomer[]>>(environment.API_BASE_URL + 'selectCustomerById', {customerId:loggedIdCustomerId});
+  }
+  /**
    * Add new customer
    * @param reqData : ICustomer
    * @returns ApiResponse<ICustomer>

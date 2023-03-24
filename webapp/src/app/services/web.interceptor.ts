@@ -8,15 +8,22 @@ import {
 } from '@angular/common/http';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { CommonMethods } from '../common-methods';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class WebInterceptor implements HttpInterceptor {
 
-  constructor(private _toastr:ToastrService) { }
+  constructor(private _toastr: ToastrService, private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     var headerValues: any = {};
     //headerValues['Content-Type'] = 'application/json';
+    let token = CommonMethods.getItem('token');
+    if (token && token != '') {
+      headerValues['token'] = token;
+    }
+
     request = request.clone({
       setHeaders: headerValues,
       method: request.method
@@ -32,6 +39,10 @@ export class WebInterceptor implements HttpInterceptor {
           }
         } else if (err.status == 403) {
           errorMsg = `Error Code: ${err.status},  Message: Unauthorized Access`;
+          CommonMethods.removeItem('token');
+          CommonMethods.removeItem('role');
+          CommonMethods.removeItem('customerId');
+          window.location.reload();
         } else {
           errorMsg = 'Unknown Error';
           if (typeof err.error === "object") {

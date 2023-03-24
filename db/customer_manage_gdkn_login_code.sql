@@ -16,29 +16,19 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Table structure for table `login_code`
 --
 
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `login_code`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customer` (
-  `customerId` int NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `userName` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `dob` varchar(50) NOT NULL,
-  `gender` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
+CREATE TABLE `login_code` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customerId` varchar(45) NOT NULL,
+  `code` varchar(45) NOT NULL,
   `createdDate` datetime(6) DEFAULT NULL,
-  `updatedDate` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`customerId`),
-  UNIQUE KEY `userName_UNIQUE` (`userName`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +40,4 @@ CREATE TABLE `customer` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-22 20:24:21
+-- Dump completed on 2023-03-22 20:24:22

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { lastValueFrom } from 'rxjs';
+import { CommonMethods } from 'src/app/common-methods';
 import { ApiResponse } from 'src/app/interfaces/api-response';
 import { ICustomer } from 'src/app/interfaces/customer';
 import { IcustomerListOptions } from 'src/app/interfaces/IcustomerListOptions';
@@ -27,6 +28,7 @@ export class LeftBarComponent implements OnInit {
 		free_search_text: ''
 	}
 	fileData: File;
+	loggedIdUserRole:string = '';
 
 	constructor(
 		private _customerService: CustomerService,
@@ -34,7 +36,13 @@ export class LeftBarComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.getCustomers();
+		this.loggedIdUserRole = CommonMethods.getItem('role');
+		if (this.loggedIdUserRole=='admin') {
+			this.getCustomers();
+		} else {
+			this.getCustomersById();
+		}
+		
 		this.loginDetailsForm = new FormGroup({
 			userName: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9\s]+$")]),
 			firstName: new FormControl('', [Validators.required, Validators.pattern("[a-z A-Z\s]+$")]),
@@ -66,6 +74,26 @@ export class LeftBarComponent implements OnInit {
 	/** Get all customers */
 	getCustomers(): void {
 		var customerSub = this._customerService.getAllCustomers(this.customerListOptions).subscribe({
+			next: (res: ApiResponse<ICustomer[]>) => {
+				console.log(res);
+				this.customers = res.data;
+				this.totalRecords = res.total_records;
+				this.activeCustomerId = res.data[0]['customerId'];
+				this._customerService.selectCustomerToView.next(res.data[0]);
+			},
+			error: (err: any) => {
+				this._toastrService.error(err);
+			},
+			complete: () => {
+				customerSub.unsubscribe();
+			}
+		})
+	}
+
+	/** Get customer by id */
+	getCustomersById(): void {
+		let loggedIdCustomerId = CommonMethods.getItem('customerId')
+		var customerSub = this._customerService.getCustomersById(loggedIdCustomerId).subscribe({
 			next: (res: ApiResponse<ICustomer[]>) => {
 				console.log(res);
 				this.customers = res.data;
