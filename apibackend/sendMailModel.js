@@ -8,8 +8,8 @@ class Mail {
                 port: 587,
                 secure: false, // true for 465, false for other ports
                 auth: {
-                    user: "suman051295@gmail.com", // generated ethereal user
-                    pass: "t3rE4SWaIJvKjyHn", // generated ethereal password
+                    user: "********", // generated ethereal user
+                    pass: "********", // generated ethereal password
                 },
             });
 
